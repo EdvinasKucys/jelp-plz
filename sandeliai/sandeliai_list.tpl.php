@@ -6,13 +6,9 @@
 	include 'templates/common/breadcrumb.tpl.php';
 ?>
 
-<!-- <div class="d-flex flex-row-reverse gap-3">
-	<a href='index.php?module=<?php echo $module; ?>&action=create'>Naujas gamintojas</a>
-</div> -->
-
 <?php if(isset($_GET['remove_error'])) { ?>
 	<div class="errorBox">
-		Gamintojas nebuvo pašalintas. Pirmiausia pašalinkite to gamintojo prekes.
+		Sandėlis nebuvo pašalintas. Pirmiausia pašalinkite to sandėlio prekes.
 	</div>
 <?php } ?>
 
@@ -21,8 +17,6 @@
 		<th>ID</th>
 		<th>Pavadinimas</th>
         <th>Adresas</th>
-        <th>El Paštas</th>
-        <th>Telefonas</th>
 		<th></th>
 	</tr>
 	<?php
@@ -30,14 +24,11 @@
 		foreach($data as $key => $val) {
 			echo
 				"<tr>"
-					. "<td>{$val['id_Sandelis']}</td>"
+					. "<td>{$val['sandelio_id']}</td>"
 					. "<td>{$val['pavadinimas']}</td>"
                     . "<td>{$val['adresas']}</td>"
-                    . "<td>{$val['pastas']}</td>"
-                    . "<td>{$val['telefonas']}</td>"
 					. "<td class='d-flex flex-row-reverse gap-2'>"
-						. "<a href='index.php?module={$module}&action=look&id={$val['id_Sandelis']}'>peržiūrėti</a>"
-						// . "<a href='#' onclick='showConfirmDialog(\"{$module}\", \"{$val['id_Sandelis']}\"); return false;'>šalinti</a>&nbsp;"
+						. "<a href='index.php?module={$module}&action=look&id={$val['sandelio_id']}'>peržiūrėti</a>"
 					. "</td>"
 				. "</tr>";
 		}

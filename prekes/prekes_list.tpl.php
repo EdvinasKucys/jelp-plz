@@ -21,8 +21,9 @@
 		<th>ID</th>
 		<th>Pavadinimas</th>
         <th>Kaina</th>
-        <th>Būsena</th>
+        <th>Svoris</th>
 		<th>Gamintojas</th>
+		<th>Kategorija</th>
 		<th></th>
 	</tr>
 	<?php
@@ -30,14 +31,15 @@
 		foreach($data as $key => $val) {
 			echo
 				"<tr>"
-					. "<td>{$val['id_Preke']}</td>"
+					. "<td>{$val['id']}</td>"
 					. "<td>{$val['pavadinimas']}</td>"
                     . "<td>{$val['kaina']}</td>"
-                    . "<td>{$val['busena']}</td>"
+                    . "<td>{$val['svoris']}</td>"
 					. "<td>{$val['gamintojas']}</td>"
+					. "<td>{$val['kategorija']}</td>"
 					. "<td class='d-flex flex-row-reverse gap-2'>"
-						. "<a href='index.php?module={$module}&action=edit&id={$val['id_Preke']}'>redaguoti</a>"
-						. "<a href='#' onclick='showConfirmDialog(\"{$module}\", \"{$val['id_Preke']}\"); return false;'>šalinti</a>&nbsp;"
+						. "<a href='index.php?module={$module}&action=edit&id={$val['id']}'>redaguoti</a>"
+						. "<a href='#' onclick='showConfirmDialog(\"{$module}\", \"{$val['id']}\"); return false;'>šalinti</a>&nbsp;"
 					. "</td>"
 				. "</tr>";
 		}

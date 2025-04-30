@@ -16,13 +16,6 @@
 <?php } ?>
 
 <form action="" method="post" class="d-grid gap-3">
-	
-	<!-- <div class="form-group">
-		<label for="id_Preke">Prekes id<?php echo in_array('id_Preke', $required) ? '<span> *</span>' : ''; ?></label>
-		<input type="text" id="id_Preke" <?php if(isset($data['editing'])) { ?> readonly="readonly" <?php } ?> name="id_Preke" class="form-control" value="<?php echo isset($data['id_Preke']) ? $data['pavadinimas'] : ''; ?>">
-	</div> -->
-
-
 	<div class="form-group">
 		<label for="pavadinimas">Prekės pavadinimas<?php echo in_array('pavadinimas', $required) ? '<span> *</span>' : ''; ?></label>
 		<input type="text" id="pavadinimas" name="pavadinimas" class="form-control" value="<?php echo isset($data['pavadinimas']) ? $data['pavadinimas'] : ''; ?>">
@@ -34,8 +27,8 @@
 	</div>
 
 	<div class="form-group">
-		<label for="busena">Prekės būsena<?php echo in_array('busena', $required) ? '<span> *</span>' : ''; ?></label>
-		<input type="text" id="busena" name="busena" class="form-control" value="<?php echo isset($data['busena']) ? $data['busena'] : ''; ?>">
+		<label for="svoris">Prekės svoris<?php echo in_array('svoris', $required) ? '<span> *</span>' : ''; ?></label>
+		<input type="text" id="svoris" name="svoris" class="form-control" value="<?php echo isset($data['svoris']) ? $data['svoris'] : ''; ?>">
 	</div>
 
     <div class="form-group">
@@ -44,44 +37,58 @@
 	</div>
 
     <div class="form-group">
-		<label for="prekes_rusis">Prekės rūšis<?php echo in_array('prekes_rusis', $required) ? '<span> *</span>' : ''; ?></label>
-		<input type="text" id="prekes_rusis" name="prekes_rusis" class="form-control" value="<?php echo isset($data['prekes_rusis']) ? $data['prekes_rusis'] : ''; ?>">
+		<label for="medziaga">Prekės medžiaga<?php echo in_array('medziaga', $required) ? '<span> *</span>' : ''; ?></label>
+		<input type="text" id="medziaga" name="medziaga" class="form-control" value="<?php echo isset($data['medziaga']) ? $data['medziaga'] : ''; ?>">
 	</div>
 
     <div class="form-group">
-		<label for="fk_Gamintojasid_Gamintojas">Prekės gamintojas<?php echo in_array('fk_Gamintojasid_Gamintojas', $required) ? '<span> *</span>' : ''; ?></label>
-		<select id="fk_Gamintojasid_Gamintojas" name="fk_Gamintojasid_Gamintojas" class="form-select form-control">
+		<label for="fk_GAMINTOJASgamintojo_id">Prekės gamintojas<?php echo in_array('fk_GAMINTOJASgamintojo_id', $required) ? '<span> *</span>' : ''; ?></label>
+		<select id="fk_GAMINTOJASgamintojo_id" name="fk_GAMINTOJASgamintojo_id" class="form-select form-control">
 			<option value="">---------------</option>
 			<?php
-				// išrenkame klientus
+				// išrenkame gamintojus
 				$gamintojai = $gamintojaiObj->getGamintojaiList();
 				foreach($gamintojai as $key => $val) {
 					$selected = "";
-					if(isset($data['fk_Gamintojasid_Gamintojas']) && $data['fk_Gamintojasid_Gamintojas'] == $val['id_Gamintojas']) {
+					if(isset($data['fk_GAMINTOJASgamintojo_id']) && $data['fk_GAMINTOJASgamintojo_id'] == $val['gamintojo_id']) {
 						$selected = " selected='selected'";
 					}
-					echo "<option{$selected} value='{$val['id_Gamintojas']}'>{$val['id_Gamintojas']} - {$val['pavadinimas']}</option>";
+					echo "<option{$selected} value='{$val['gamintojo_id']}'>{$val['gamintojo_id']} - {$val['pavadinimas']}</option>";
 				}
 			?>
 		</select>
 	</div>
 
-	<h4 class="mt-3">Sandėlių likučiai</h4>
+	<div class="form-group">
+		<label for="fk_KATEGORIJAid_KATEGORIJA">Prekės kategorija<?php echo in_array('fk_KATEGORIJAid_KATEGORIJA', $required) ? '<span> *</span>' : ''; ?></label>
+		<select id="fk_KATEGORIJAid_KATEGORIJA" name="fk_KATEGORIJAid_KATEGORIJA" class="form-select form-control">
+			<option value="">---------------</option>
+			<?php
+				// išrenkame kategorijas
+				$categoryObj = new Category();
+				$kategorijos = $categoryObj->getCategoriesForSelect();
+				foreach($kategorijos as $key => $val) {
+					$selected = "";
+					if(isset($data['fk_KATEGORIJAid_KATEGORIJA']) && $data['fk_KATEGORIJAid_KATEGORIJA'] == $val['id_KATEGORIJA']) {
+						$selected = " selected='selected'";
+					}
+					echo "<option{$selected} value='{$val['id_KATEGORIJA']}'>{$val['id_KATEGORIJA']} - {$val['pavadinimas']}</option>";
+				}
+			?>
+		</select>
+	</div>
 
-
-
-
-
-	<?php if(isset($data['id_Preke'])) { ?>
-		<input type="hidden" name="id_Preke" value="<?php echo $data['id_Preke']; ?>" />
+	<?php if(isset($data['id'])) { ?>
+		<input type="hidden" name="id" value="<?php echo $data['id']; ?>" />
 	<?php } ?>
 
+	<h4 class="mt-3">Sandėlių likučiai</h4>
 
 	<div class="row w-75">
 		<div class="formRowsContainer column">
 			<div class="row headerRow<?php if(empty($data['sandelio_prekes']) || sizeof($data['sandelio_prekes']) == 1) echo ' d-none'; ?>">
 				<div class="col-6">Sandėlis</div>
-				<div class="col-1">Kiekis</div>
+				<div class="col-2">Kiekis</div>
 				<div class="col-4"></div>
 			</div>
 			<?php
@@ -94,8 +101,8 @@
 						}
 
 						$kiekis = '';
-						if(isset($sandelioPrekes['saugomas_kiekis']) ) {
-							$kiekis = $sandelioPrekes['saugomas_kiekis'];
+						if(isset($sandelioPrekes['kiekis'])) {
+							$kiekis = $sandelioPrekes['kiekis'];
 						}
 
 					?>
@@ -106,10 +113,10 @@
 										$allSandeliai = $sandeliaiObj->getSandeliaiList();
 										foreach($allSandeliai as $sandelis) {
 											$selected = "";
-												if(isset($sandelioPrekes['fk_Sandelisid_Sandelis']) && $sandelioPrekes['fk_Sandelisid_Sandelis'] == $sandelis['id_Sandelis']) {
+												if(isset($sandelioPrekes['fk_SANDELISsandelio_id']) && $sandelioPrekes['fk_SANDELISsandelio_id'] == $sandelis['sandelio_id']) {
 													$selected = " selected='selected'";
 												}
-											echo "<option{$selected} value='{$sandelis['id_Sandelis']}'>{$sandelis['id_Sandelis']} - {$sandelis['pavadinimas']}</option>";
+											echo "<option{$selected} value='{$sandelis['sandelio_id']}'>{$sandelis['sandelio_id']} - {$sandelis['pavadinimas']}</option>";
 										}
 									?>
 								</select>
@@ -121,18 +128,11 @@
 					<?php 
 					}
 				}
-					?>
+			?>
 		</div>
 		<div class="w-100">
 			<a href="#" class="addChild">Pridėti</a>
 		</div>
-	</div>
-
-	<div>
-		<h4>Debug</h4>
-		<pre>
-			<?php var_dump($val, $_POST, $data); ?>
-		</pre>
 	</div>
 
 	<p class="required-note">* pažymėtus laukus užpildyti privaloma</p>

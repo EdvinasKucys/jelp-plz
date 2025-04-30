@@ -29,7 +29,7 @@
 	include 'libraries/manufacturer.class.php';
 	include 'libraries/product.class.php';
 	include 'libraries/warehouse.class.php';
-
+	include 'libraries/category.class.php';
 	
 
 	// nustatome pasirinktą modulį
